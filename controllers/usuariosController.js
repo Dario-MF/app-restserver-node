@@ -62,8 +62,10 @@ const usuariosDelete = async(req= request, res= response) => {
 
     const {id} = req.params
 
-    const usuario = await Usuario.findByIdAndDelete( id );
-
+    // No es recomendable eliminar informacion,
+    // cambiamos el estado y a efectos practicos del CRUD consta como eliminado pero la informacion persiste.
+    const usuario = await Usuario.findByIdAndUpdate( id, { state: false } );
+    
     res.json({
         msg: 'Delete API - controller',
         id,
